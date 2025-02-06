@@ -1,6 +1,11 @@
 <?php
 include 'config.php';
 
+session_start();
+if (!isset($_SESSION['admin'])) {
+    header("Location: login.php");
+    exit();
+}
 // Adicionar uma nova caixinha
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['numero']) && isset($_POST['premio'])) {
     $numero = $_POST['numero'];
