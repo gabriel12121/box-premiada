@@ -10,14 +10,16 @@ document.querySelectorAll(".caixinha").forEach(button => {
 
         fetch("jogar_caixinha.php", {
             method: "POST",
-            headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-            },
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: `usuario=${encodeURIComponent(usuario)}&caixinha=${encodeURIComponent(caixinha)}`
         })
         .then(response => response.json())
         .then(data => {
-            document.getElementById("resultado").innerText = `Você ganhou: ${data.premio}`;
+            if (data.status === "error") {
+                alert(data.mensagem);
+            } else {
+                document.getElementById("resultado").innerText = `Você ganhou: ${data.premio} | Saldo: ${data.saldo}`;
+            }
         })
         .catch(error => console.error("Erro:", error));
     });
